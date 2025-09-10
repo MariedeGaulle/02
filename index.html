@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Magnet Keeper — 多源搜索 + 真实速度</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <meta name="color-scheme" content="light dark" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Magnet Keeper</h1>
+    <div class="top-actions">
+      <button id="themeToggle" title="切换主题">🌓</button>
+      <button id="settingsBtn" title="设置">⚙️ 设置</button>
+      <button id="exportBtn" title="导出数据">导出</button>
+      <label class="import-label" title="导入 JSON">
+        导入
+        <input type="file" id="importInput" accept="application/json" hidden />
+      </label>
+      <button id="clearAllBtn" class="danger" title="清空全部">清空</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>添加磁力链接</h2>
+      <form id="addForm">
+        <div class="grid">
+          <label>
+            标题
+            <input id="titleInput" type="text" placeholder="可选：给它起个名字" />
+          </label>
+          <label class="full">
+            磁力链接
+            <input id="magnetInput" type="url" required placeholder="magnet:?xt=urn:btih:..." />
+          </label>
+          <label>
+            标签
+            <input id="tagsInput" type="text" placeholder="用逗号分隔，例如：电影,4K" />
+          </label>
+          <label class="full">
+            备注
+            <input id="noteInput" type="text" placeholder="可选说明…" />
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="submit">添加</button>
+        </div>
+        <p class="hint">说明：本应用仅管理你手动添加的 magnet 链接，不提供抓取能力。</p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>多源搜索</h2>
+      <div class="grid">
+        <label class="full">
+          关键词
+          <input id="searchInput" type="search" placeholder="输入关键词，例如：Oppenheimer 2160p" />
+        </label>
+      </div>
+      <div class="form-actions">
+        <button id="searchBtn">生成搜索链接</button>
+        <button id="reloadRulesBtn" type="button">重新加载规则</button>
+      </div>
+      <ul id="searchResults" class="list"></ul>
+      <p id="searchEmptyHint" class="empty">输入关键词并点击“生成搜索链接”。</p>
+    </section>
+
+    <section class="card">
+      <h2>筛选与搜索</h2>
+      <div class="grid">
+        <label class="full">
+          关键词
+          <input id="qInput" type="search" placeholder="搜索标题、备注、InfoHash…" />
+        </label>
+        <label>
+          标签包含
+          <input id="tagFilterInput" type="text" placeholder="逗号分隔" />
+        </label>
+        <label>
+          排序
+          <select id="sortSelect">
+            <option value="created_desc">最近添加优先</option>
+            <option value="created_asc">最早添加优先</option>
+            <option value="title_asc">标题 A→Z</option>
+            <option value="title_desc">标题 Z→A</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>磁力列表</h2>
+      <ul id="list" class="list"></ul>
+      <p id="emptyHint" class="empty">暂无数据。添加你的第一个磁力链接吧。</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>本工具为纯前端本地应用，不提供抓取功能。速度显示需你配置本地/私有 BT 客户端 API。</p>
+  </footer>
+
+  <template id="itemTpl">
+    <li class="item">
+      <div class="item-main">
+        <div class="item-title-row">
+          <strong class="item-title"></strong>
+          <span class="item-time"></span>
+        </div>
+        <div class="item-sub">
+          <code class="item-hash"></code>
+          <span class="item-tags"></span>
+          <span class="item-speed"></span>
+        </div>
+        <div class="item-note"></div>
+        <details class="item-details">
+          <summary>解析详情</summary>
+          <div class="kv">
+            <div><b>InfoHash:</b> <code class="kv-hash"></code></div>
+            <div><b>名称:</b> <span class="kv-dn"></span></div>
+            <div><b>Trackers:</b>
+              <ul class="kv-tr"></ul>
+            </div>
+            <div><b>原始链接:</b> <code class="kv-raw"></code></div>
+          </div>
+        </details>
+      </div>
+      <div class="item-actions">
+        <button class="openBtn" title="在客户端中打开">打开</button>
+        <button class="copyBtn" title="复制磁力">复制</button>
+        <button class="editBtn" title="编辑">编辑</button>
+        <button class="delBtn danger" title="删除">删除</button>
+      </div>
+    </li>
+  </template>
+
+  <!-- 设置面板 -->
+  <div id="settingsPanel" class="modal hidden">
+    <div class="modal-content">
+      <h2>设置</h2>
+      <div class="grid">
+        <label>
+          客户端类型
+          <select id="clientTypeSelect">
+            <option value="qb">qBittorrent</option>
+            <option value="tr">Transmission</option>
+          </select>
+        </label>
+        <label class="full">
+          API 地址
+          <input id="apiUrlInput" type="url" placeholder="例如 http://127.0.0.1:8080/api/v2（qB）或 http://127.0.0.1:9091/transmission/rpc（TR）" />
+        </label>
+        <label class="full">
+          认证方式与凭据
+          <input id="apiTokenInput" type="text" placeholder="qB: Bearer Token；Transmission: Basic user:pass（或留空）" />
+        </label>
+        <label class="full">
+          自定义正则校验（每行一个）
+          <textarea id="rulesRegexInput" rows="5" placeholder="例如：\nxt=urn:btih:[A-Za-z0-9]{32,40}"></textarea>
+        </label>
+      </div>
+      <div class="hint">
+        - 仅当前设备生效，保存至浏览器本地存储。<br/>
+        - 若跨域，需在你的 BT 客户端开启或允许 CORS。
+      </div>
+      <div class="form-actions">
+        <button id="saveSettingsBtn">保存</button>
+        <button id="closeSettingsBtn">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
