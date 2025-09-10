@@ -1,24 +1,61 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>磁力多源搜索</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>磁力多源搜索门户</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="color-scheme" content="light dark">
 </head>
 <body>
-<header>
-  <h1>磁力多源搜索</h1>
-  <div class="search-bar">
-    <input type="text" id="keyword" placeholder="输入关键词，例如：Oppenheimer 2160p">
-    <button id="searchBtn">搜索</button>
-    <button id="openAllBtn">一键全开</button>
-  </div>
-</header>
-<main id="results"></main>
-<footer>
-  <p>本工具仅生成各源的搜索入口，不抓取内容，请合法使用。</p>
-</footer>
-<script src="app.js"></script>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🧭</span>
+      <h1>磁力多源搜索</h1>
+    </div>
+    <nav class="actions">
+      <select id="categoryFilter">
+        <option value="all">全部分类</option>
+      </select>
+      <button id="themeBtn" title="切换主题">🌓</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="search-wrap">
+      <input id="keyword" type="search" placeholder="输入关键词，例如：Oppenheimer 2160p / Nyaa 1080p HEVC" />
+      <button id="searchBtn">搜索</button>
+      <button id="openAllBtn" title="在新标签页打开所有结果">一键全开</button>
+    </div>
+    <div class="chips" id="hotChips"></div>
+    <div class="history" id="history"></div>
+  </section>
+
+  <main id="results" class="grid"></main>
+
+  <footer class="footer">
+    <p>本工具仅生成公开网站的搜索入口链接，不抓取或存储任何内容。请合法使用。</p>
+  </footer>
+
+  <template id="sourceCardTpl">
+    <article class="source-card">
+      <header class="source-header">
+        <img class="source-icon" alt="">
+        <div class="source-info">
+          <h3 class="source-name"></h3>
+          <p class="desc"></p>
+        </div>
+        <span class="tag"></span>
+      </header>
+      <div class="status">
+        <span class="dot"></span><span class="text">检测中…</span>
+      </div>
+      <div class="source-actions">
+        <!-- actions injected -->
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
 </body>
 </html>
