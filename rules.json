@@ -1,19 +1,39 @@
 {
   "rules": [
-    { "name": "BT联盟", "url": "https://cdn.btlm.top:65533" },
-    { "name": "BTSearch", "url": "https://www.btsearch.love" },
-    { "name": "搜番", "url": "https://cdn.sofan.one:65533" },
-    { "name": "无极磁链", "url": "https://wuji.me" },
-    { "name": "磁力多", "url": "https://doc2.htmcdn.com:65533" },
-    { "name": "1337x（需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/1337x.json" },
-    { "name": "TorrentGalaxy（需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/torrentgalaxy.json" },
-    { "name": "LimeTorrents（需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/limetorrents.json" },
-    { "name": "TorrentDownloads（需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/torrentdownloads.json" },
-    { "name": "Kickass（需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/kickass.json" },
-    { "name": "PirateBay（需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/piratebay.json" },
-    { "name": "YTS.mx（电影专用）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/YTS.json" },
-    { "name": "Nyaa.si（动漫专用）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/nyaa.si.json" },
-    { "name": "Anidex（动漫字幕组，需代理）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/anidex.json" },
-    { "name": "RARBG（已关闭，规则保留）", "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/rarbg.json" }
+    {
+      "name": "BT联盟",
+      "url": "https://cdn.btlm.top:65533",
+      "category": "国内稳定源",
+      "desc": "国内稳定源，无需代理",
+      "icon": "https://cdn.btlm.top/favicon.ico"
+    },
+    {
+      "name": "BTSearch",
+      "url": "https://www.btsearch.love",
+      "category": "国内稳定源",
+      "desc": "国内综合搜索",
+      "icon": "https://www.btsearch.love/favicon.ico"
+    },
+    {
+      "name": "搜番",
+      "url": "https://cdn.sofan.one:65533",
+      "category": "国内稳定源",
+      "desc": "动漫资源搜索",
+      "icon": "https://cdn.sofan.one/favicon.ico"
+    },
+    {
+      "name": "1337x",
+      "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/1337x.json",
+      "category": "国外高质量源",
+      "desc": "需代理",
+      "icon": "https://1337x.to/favicon.ico"
+    },
+    {
+      "name": "YTS.mx",
+      "url": "https://raw.githubusercontent.com/cqboyone/magnetW_rule/main/rule/YTS.json",
+      "category": "国外高质量源",
+      "desc": "电影专用",
+      "icon": "https://yts.mx/assets/images/website/favicon.ico"
+    }
   ]
 }
